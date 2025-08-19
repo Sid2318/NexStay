@@ -1,0 +1,45 @@
+<% if (isLoggedIn && typeof user !== 'undefined' && user) { %>
+<form action="/add-to-favourites" method="POST" class="ml-3">
+  <input type="hidden" name="homeId" value="<%= home._id %>" />
+  <button
+    type="submit"
+    class="p-2 rounded-md border border-gray-200 bg-white hover:bg-red-800 transition-colors duration-300"
+  >
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      fill="<%= home.isFavourite ? 'currentColor' : 'none' %>"
+      viewBox="0 0 24 24"
+      stroke="currentColor"
+      class="w-5 h-5 <%= home.isFavourite ? 'text-red-500' : 'text-gray-500' %>"
+    >
+      <path
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        stroke-width="2"
+        d="M4.318 6.318a4.5 4.5 0 016.364 0L12 7.636l1.318-1.318a4.5 4.5 0 016.364 6.364L12 21l-7.682-7.682a4.5 4.5 0 010-6.364z"
+      />
+    </svg>
+  </button>
+</form>
+<% } else { %>
+<a
+  href="/login"
+  class="ml-3 p-2 rounded-md border border-gray-200 hover:bg-gray-50 transition"
+  title="Login to add to favourites"
+>
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    viewBox="0 0 24 24"
+    stroke="currentColor"
+    fill="none"
+    class="w-5 h-5 text-gray-400"
+  >
+    <path
+      stroke-linecap="round"
+      stroke-linejoin="round"
+      stroke-width="2"
+      d="M4.318 6.318a4.5 4.5 0 016.364 0L12 7.636l1.318-1.318a4.5 4.5 0 016.364 6.364L12 21l-7.682-7.682a4.5 4.5 0 010-6.364z"
+    />
+  </svg>
+</a>
+<% } %>

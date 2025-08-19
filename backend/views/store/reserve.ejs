@@ -1,0 +1,215 @@
+<%- include('../partials/head') %>
+</head>
+<body>
+<%- include('../partials/nav') %>
+
+<div class="container mx-auto px-6 py-12">
+  <div class="max-w-6xl mx-auto">
+    <h1 class="text-3xl font-bold text-gray-800 mb-8 text-center">Complete Your Booking</h1>
+    
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+      <!-- Property Details -->
+      <div class="bg-white rounded-xl shadow-lg overflow-hidden">
+        <div class="relative">
+          <img src="/<%= home.houseImage %>" alt="<%= home.houseName %>" 
+               class="w-full h-64 object-cover"
+               onerror="this.onerror=null; this.src='/images/no-image.png'">
+        </div>
+        
+        <div class="p-6">
+          <h2 class="text-2xl font-bold text-gray-800 mb-2"><%= home.houseName %></h2>
+          
+          <!-- Location -->
+          <div class="flex items-center mb-4">
+            <svg class="w-5 h-5 text-gray-500 mr-2" fill="currentColor" viewBox="0 0 20 20">
+              <path fill-rule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clip-rule="evenodd"/>
+            </svg>
+            <p class="text-gray-600"><%= home.houseLocation %></p>
+          </div>
+          
+          <!-- Rating -->
+          <div class="flex items-center mb-4">
+            <% for(let i = 1; i <= 5; i++) { %>
+              <% if(i <= home.rating) { %>
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-5 h-5 text-yellow-400 mr-0.5">
+                  <path fill-rule="evenodd" d="M10.788 3.21c.448-1.077 1.976-1.077 2.424 0l2.082 5.007 5.404.433c1.164.093 1.636 1.545.749 2.305l-4.117 3.527 1.257 5.273c.271 1.136-.964 2.033-1.96 1.425L12 18.354 7.373 21.18c-.996.608-2.231-.29-1.96-1.425l1.257-5.273-4.117-3.527c-.887-.76-.415-2.212.749-2.305l5.404-.433 2.082-5.006z" clip-rule="evenodd" />
+                </svg>
+              <% } else { %>
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="w-5 h-5 text-gray-300 mr-0.5">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z" />
+                </svg>
+              <% } %>
+            <% } %>
+            <span class="text-gray-800 ml-2"><%= home.rating %> stars</span>
+          </div>
+          
+          <!-- Price -->
+          <div class="text-2xl font-bold text-red-600">
+            Rs<%= home.price %><span class="text-sm text-gray-500 font-normal">/night</span>
+          </div>
+          
+          <!-- Description -->
+          <% if (home.description) { %>
+            <div class="mt-4">
+              <h3 class="font-semibold text-gray-800 mb-2">Description</h3>
+              <p class="text-gray-600"><%= home.description %></p>
+            </div>
+          <% } %>
+        </div>
+      </div>
+      
+      <!-- Booking Form -->
+      <div class="bg-white rounded-xl shadow-lg p-6">
+        <h3 class="text-xl font-bold text-gray-800 mb-6">Booking Details</h3>
+        
+        <form action="/book/<%= home._id %>" method="POST" class="space-y-4">
+          <!-- Guest Information -->
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div>
+              <label class="block text-gray-700 font-semibold mb-2">Full Name *</label>
+              <input type="text" name="guestName" required 
+                     class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent"
+                     placeholder="Enter your full name">
+            </div>
+            <div>
+              <label class="block text-gray-700 font-semibold mb-2">Email *</label>
+              <input type="email" name="guestEmail" required 
+                     class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent"
+                     placeholder="Enter your email">
+            </div>
+          </div>
+          
+          <div>
+            <label class="block text-gray-700 font-semibold mb-2">Phone Number *</label>
+            <input type="tel" name="guestPhone" required 
+                   class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent"
+                   placeholder="Enter your phone number">
+          </div>
+          
+          <!-- Date Selection -->
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div>
+              <label class="block text-gray-700 font-semibold mb-2">Check-in Date *</label>
+              <input type="date" name="checkIn" required 
+                     class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent">
+            </div>
+            <div>
+              <label class="block text-gray-700 font-semibold mb-2">Check-out Date *</label>
+              <input type="date" name="checkOut" required 
+                     class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent">
+            </div>
+          </div>
+          
+          <!-- Number of Guests -->
+          <div>
+            <label class="block text-gray-700 font-semibold mb-2">Number of Guests *</label>
+            <select name="guests" required 
+                    class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent">
+              <option value="">Select number of guests</option>
+              <option value="1">1 Guest</option>
+              <option value="2">2 Guests</option>
+              <option value="3">3 Guests</option>
+              <option value="4">4 Guests</option>
+              <option value="5">5 Guests</option>
+              <option value="6">6+ Guests</option>
+            </select>
+          </div>
+          
+          <!-- Payment Mode -->
+          <div>
+            <label class="block text-gray-700 font-semibold mb-2">Payment Method *</label>
+            <div class="space-y-3">
+              <div class="flex items-center">
+                <input type="radio" name="paymentMode" value="credit_card" id="credit_card" required
+                       class="h-4 w-4 text-red-600 focus:ring-red-500 border-gray-300">
+                <label for="credit_card" class="ml-3 text-gray-700">Credit/Debit Card</label>
+              </div>
+              <div class="flex items-center">
+                <input type="radio" name="paymentMode" value="paypal" id="paypal" required
+                       class="h-4 w-4 text-red-600 focus:ring-red-500 border-gray-300">
+                <label for="paypal" class="ml-3 text-gray-700">PayPal</label>
+              </div>
+              <div class="flex items-center">
+                <input type="radio" name="paymentMode" value="bank_transfer" id="bank_transfer" required
+                       class="h-4 w-4 text-red-600 focus:ring-red-500 border-gray-300">
+                <label for="bank_transfer" class="ml-3 text-gray-700">Bank Transfer</label>
+              </div>
+              <div class="flex items-center">
+                <input type="radio" name="paymentMode" value="cash" id="cash" required
+                       class="h-4 w-4 text-red-600 focus:ring-red-500 border-gray-300">
+                <label for="cash" class="ml-3 text-gray-700">Pay at Check-in</label>
+              </div>
+            </div>
+          </div>
+          
+          <!-- Price Summary -->
+          <div class="bg-gray-50 p-4 rounded-lg">
+            <h4 class="font-semibold text-gray-800 mb-2">Price Summary</h4>
+            <div class="flex justify-between items-center mb-2">
+              <span class="text-gray-600">Rs<%= home.price %> × nights</span>
+              <span class="text-gray-800" id="subtotal">--</span>
+            </div>
+            <div class="border-t pt-2">
+              <div class="flex justify-between items-center font-semibold text-lg">
+                <span>Total</span>
+                <span class="text-red-600" id="total">--</span>
+              </div>
+            </div>
+          </div>
+          
+          <!-- Submit Button -->
+          <button type="submit" 
+                  class="w-full bg-red-500 text-white py-3 px-6 rounded-lg font-semibold text-lg hover:bg-red-600 transition duration-300 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-opacity-50">
+            Confirm Booking
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+// Calculate price dynamically
+function calculatePrice() {
+  const checkIn = document.querySelector('input[name="checkIn"]').value;
+  const checkOut = document.querySelector('input[name="checkOut"]').value;
+  const pricePerNight = <%= home.price %>;
+  
+  if (checkIn && checkOut) {
+    const checkInDate = new Date(checkIn);
+    const checkOutDate = new Date(checkOut);
+    
+    if (checkOutDate > checkInDate) {
+      const nights = Math.ceil((checkOutDate - checkInDate) / (1000 * 60 * 60 * 24));
+      const subtotal = nights * pricePerNight;
+      
+      document.getElementById('subtotal').textContent = `Rs${subtotal}`;
+      document.getElementById('total').textContent = `Rs${subtotal}`;
+    }
+  }
+}
+
+// Add event listeners for date inputs
+document.querySelector('input[name="checkIn"]').addEventListener('change', calculatePrice);
+document.querySelector('input[name="checkOut"]').addEventListener('change', calculatePrice);
+
+// Set minimum date to today
+const today = new Date().toISOString().split('T')[0];
+document.querySelector('input[name="checkIn"]').setAttribute('min', today);
+document.querySelector('input[name="checkOut"]').setAttribute('min', today);
+
+// Update checkout minimum date when checkin changes
+document.querySelector('input[name="checkIn"]').addEventListener('change', function() {
+  const checkInDate = this.value;
+  const checkOutInput = document.querySelector('input[name="checkOut"]');
+  
+  if (checkInDate) {
+    const minCheckOut = new Date(checkInDate);
+    minCheckOut.setDate(minCheckOut.getDate() + 1);
+    checkOutInput.setAttribute('min', minCheckOut.toISOString().split('T')[0]);
+  }
+});
+</script>
+
+</body>
+</html>

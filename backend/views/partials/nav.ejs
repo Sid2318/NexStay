@@ -1,0 +1,91 @@
+<header class="bg-red-500 text-white p-4 shadow-md">
+  <nav class="container mx-auto flex justify-between items-center">
+    <!-- Left side - Logo and navigation items -->
+    <div class="flex items-center space-x-6">
+      <!-- Airbnb Logo at left corner -->
+      <a href="/" class="flex-shrink-0">
+        <img src="/images/Airbnb3.png" alt="Airbnb Logo" class="w-12 h-12 mr-12">
+      </a>
+      
+      <!-- Navigation items -->
+      <ul class="flex space-x-4 items-center">
+        <li>
+          <a
+            href="/"
+            class="<%= currentPage === 'Home' ? 'bg-red-400' : 'hover:bg-red-400' %> py-2 px-4 rounded transition duration-300"
+            >Home</a
+          >
+        </li>
+        <% if (isLoggedIn) { %>
+          <% if (typeof user !== 'undefined' && user && user.userType === 'guest') { %>
+          <li>
+            <a
+              href="homes"
+              class="<%= currentPage === 'homes' ? 'bg-red-400' : 'hover:bg-red-400' %> py-2 px-4 rounded transition duration-300"
+              >Home List</a
+            >
+          </li>
+          <li>
+            <a
+              href="/favourites"
+              class="<%= currentPage === 'Favourites' ? 'bg-red-400' : 'hover:bg-red-400' %> py-2 px-4 rounded transition duration-300"
+              >Favourites</a
+            >
+          </li>
+          <li>
+            <a
+              href="/bookings"
+              class="<%= currentPage === 'bookings' ? 'bg-red-400' : 'hover:bg-red-400' %> py-2 px-4 rounded transition duration-300"
+              >Bookings</a
+            >
+          </li>
+          <% } else if (typeof user !== 'undefined' && user && user.userType === 'host') { %>
+          <li>
+            <a
+              href="/host/host-home-list"
+              class="<%= currentPage === 'host-homes' ? 'bg-red-400' : 'hover:bg-red-400' %> py-2 px-4 rounded transition duration-300"
+              >Host Homes</a
+            >
+          </li>
+          <li>
+            <a
+              href="/host/add-home"
+              class="<%= currentPage === 'addHome' ? 'bg-red-400' : 'hover:bg-red-400' %> py-2 px-4 rounded transition duration-300"
+              >Add Home</a
+            >
+          </li>
+          <% } %>
+        <% } %>
+        <% if (!isLoggedIn) { %>
+          <li>
+            <a
+              href="/signup"
+              class="<%= currentPage === 'signup' ? 'bg-red-400' : 'hover:bg-red-400' %> py-2 px-4 rounded transition duration-300"
+              >Sign Up</a
+            >
+          </li>
+          <li>
+            <a
+              href="/login"
+              class="<%= currentPage === 'login' ? 'bg-red-400' : 'hover:bg-red-400' %> py-2 px-4 rounded transition duration-300"
+              >Login</a
+            >
+          </li>
+        <% } %>
+      </ul>
+    </div>
+
+    <!-- Right side logout button -->
+    <% if (isLoggedIn) { %>
+    <div class="flex items-center">
+      <form action="/logout" method="POST">
+        <button
+          type="submit"
+          class=" hover:bg-red-400 py-2 px-4 rounded transition duration-300">
+          Logout
+        </button>
+      </form>
+    </div>
+    <% } %>
+  </nav>
+</header>
