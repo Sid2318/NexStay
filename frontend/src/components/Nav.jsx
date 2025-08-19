@@ -104,13 +104,13 @@ export default function Nav() {
           <div className="flex items-center gap-2">
             <Link
               to="/login"
-              className={`btn btn-secondary ${is("/login") ? "active" : ""}`}
+              className={`btn btn-secondary mr-2 ${is("/login") ? "active" : ""}`}
             >
               Login
             </Link>
             <Link
               to="/signup"
-              className={`btn btn-primary ${is("/signup") ? "active" : ""}`}
+              className={`btn btn-primary ml-2 ${is("/signup") ? "active" : ""}`}
             >
               Sign up
             </Link>
