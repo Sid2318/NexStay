@@ -1,6 +1,64 @@
 const Home = require("../models/home");
 // const Favourite = require("../models/favourite");
 const User = require("../models/user");
+const fs = require('fs');
+const path = require('path');
+const rootDir = require('../utils/pathUtil');
+
+// File-based bookings storage
+const dataDir = path.join(rootDir, 'data');
+const bookingsFile = path.join(dataDir, 'bookings.json');
+
+function ensureDataFile() {
+  try {
+    if (!fs.existsSync(dataDir)) {
+      fs.mkdirSync(dataDir, { recursive: true });
+    }
+    if (!fs.existsSync(bookingsFile)) {
+      fs.writeFileSync(bookingsFile, '[]', 'utf-8');
+    }
+  } catch (e) {
+    console.error('Error ensuring bookings data file:', e);
+  }
+}
+
+function readAllBookings() {
+  ensureDataFile();
+  try {
+    const raw = fs.readFileSync(bookingsFile, 'utf-8');
+    return JSON.parse(raw || '[]');
+  } catch (e) {
+    console.error('Failed to read bookings file:', e);
+    return [];
+  }
+}
+
+function writeAllBookings(bookings) {
+  ensureDataFile();
+  try {
+    fs.writeFileSync(bookingsFile, JSON.stringify(bookings, null, 2), 'utf-8');
+  } catch (e) {
+    console.error('Failed to write bookings file:', e);
+  }
+}
+
+// mark booking paid
+exports.apiMarkBookingPaid = (req, res) => {
+  try {
+    if (!req.session.user) return res.status(401).json({ message: 'Unauthorized' });
+    const { bookingId } = req.params;
+    const all = readAllBookings();
+    const idx = all.findIndex(b => b.id === bookingId && b.userId === req.session.user._id.toString());
+    if (idx === -1) return res.status(404).json({ message: 'Booking not found' });
+    all[idx].paid = true;
+    all[idx].paidAt = new Date().toISOString();
+    writeAllBookings(all);
+    res.json({ message: 'Payment recorded' });
+  } catch (e) {
+    console.error('apiMarkBookingPaid error:', e);
+    res.status(500).json({ message: 'Server error' });
+  }
+};
 
 exports.getIndex = (req, res, next) => {
   console.log("is logged in:", req.session);
@@ -8,7 +66,7 @@ exports.getIndex = (req, res, next) => {
     .then((registerHome) => {
       res.render("store/index", {
         registerHome: registerHome,
-        title: "Airbnb - Home",
+        title: "NexStay - Home",
         currentPage: "Index",
         isLoggedIn: req.session.isLoggedIn || false,
         user: req.session.user || null,
@@ -26,7 +84,7 @@ exports.getHome = (req, res, next) => {
     .then((registerHome) => {
       res.render("store/home-list", {
         registerHome: registerHome,
-        title: "Airbnb - Home",
+        title: "NexStay - Home",
         currentPage: "Home",
         isLoggedIn: req.session.isLoggedIn || false,
         user: req.session.user || null,
@@ -55,7 +113,7 @@ exports.getBookings = (req, res, next) => {
     .then((registerHome) => {
       res.render("store/bookings", {
         registerHome: registerHome,
-        title: "Airbnb - Bookings",
+        title: "NexStay - Bookings",
         currentPage: "bookings",
         isLoggedIn: req.session.isLoggedIn || false,
         user: req.session.user || null,
@@ -92,7 +150,7 @@ exports.getFavouritesList = async (req, res, next) => {
 
     res.render("store/favourite-list", {
       favouriteHomes: user.favourites || [],
-      title: "Airbnb - Favourites",
+      title: "NexStay - Favourites",
       currentPage: "Favourites",
       isLoggedIn: req.session.isLoggedIn,
       user: req.session.user,
@@ -378,21 +436,27 @@ exports.apiPostBooking = async (req, res) => {
     const checkOutDate = new Date(checkOut);
     const nights = Math.ceil((checkOutDate - checkInDate) / (1000 * 60 * 60 * 24));
     const totalPrice = nights * home.price;
-    // Persist booking if user is logged in
     if (!req.session.user) {
       return res.status(401).json({ message: 'Unauthorized' });
     }
-    const booking = new Booking({
-      home: home._id,
-      guest: req.session.user._id,
-      checkIn: checkInDate,
-      checkOut: checkOutDate,
-      guests,
-      paymentMode,
+    // File-based booking persistence
+    const all = readAllBookings();
+    const booking = {
+      id: `${Date.now()}_${Math.random().toString(36).slice(2)}`,
+      userId: req.session.user._id.toString(),
+      homeId: home._id.toString(),
+      homeName: home.houseName,
+      price: home.price,
+      checkIn: checkInDate.toISOString(),
+      checkOut: checkOutDate.toISOString(),
+      guests: Number(guests) || 1,
+      paymentMode: paymentMode || 'cod',
       totalPrice,
-    });
-    await booking.save();
-    return res.status(201).json({ message: 'Booked', nights, totalPrice, bookingId: booking._id });
+      createdAt: new Date().toISOString(),
+    };
+    all.push(booking);
+    writeAllBookings(all);
+    return res.status(201).json({ message: 'Booked', nights, totalPrice, bookingId: booking.id });
   } catch (err) {
     console.error('apiPostBooking error:', err);
     res.status(500).json({ message: 'Server error' });
@@ -400,4 +464,15 @@ exports.apiPostBooking = async (req, res) => {
 };
 
 // API: get bookings for current user
-// apiGetBookings was introduced temporarily; removing to revert to placeholder UI
+exports.apiGetBookings = async (req, res) => {
+  try {
+    if (!req.session.user) return res.status(401).json({ message: 'Unauthorized' });
+    const all = readAllBookings();
+    const userId = req.session.user._id.toString();
+    const mine = all.filter(b => b.userId === userId).sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+    res.json(mine);
+  } catch (err) {
+    console.error('apiGetBookings error:', err);
+    res.status(500).json({ message: 'Server error' });
+  }
+};

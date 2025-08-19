@@ -83,7 +83,7 @@ app.use(express.json());
 
 // CORS for React frontend
 app.use(cors({
-  origin: process.env.FRONTEND_ORIGIN || 'http://localhost:5173',
+  origin: process.FRONTEND_ORIGIN || 'http://localhost:5173',
   credentials: true
 }));
 app.use(multer(multerOptions).single('houseImage'));

@@ -17,7 +17,7 @@ const generateHomePDF = async (home, outputPath) => {
                 margin: 50,
                 info: {
                     Title: `${home.houseName} - Details`,
-                    Author: 'Airbnb Clone',
+                    Author: 'NexStay Clone',
                 }
             });
 
@@ -106,7 +106,7 @@ const generateHomePDF = async (home, outputPath) => {
                 doc.fontSize(10)
                    .font('Helvetica')
                    .text(
-                      'Generated from Airbnb Clone - ' + new Date().toLocaleDateString(),
+                      'Generated from NexStay Clone - ' + new Date().toLocaleDateString(),
                       50,
                       doc.page.height - 50,
                       { align: 'center' }

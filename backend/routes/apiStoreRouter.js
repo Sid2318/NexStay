@@ -7,6 +7,8 @@ const pdfController = require('../controllers/pdfController');
 router.get('/homes', storeController.apiGetHomes);
 router.get('/homes/:homeId', storeController.apiGetHomeDetails);
 router.get('/homes/:homeId/pdf', pdfController.downloadHomePDF);
+router.get('/bookings', storeController.apiGetBookings);
+router.post('/bookings/:bookingId/pay', storeController.apiMarkBookingPaid);
 
 router.get('/favourites', storeController.apiGetFavourites);
 router.post('/favourites', storeController.apiAddToFavourites);

@@ -5,7 +5,7 @@ const { use } = require('react');
 
 exports.getLogin = (req, res, next) => {
   res.render("auth/login", {
-    title: "Airbnb - Login",
+    title: "NexStay - Login",
     currentPage: "login",
     isLoggedIn: false,
     oldInput: {
@@ -19,7 +19,7 @@ exports.getLogin = (req, res, next) => {
 
 exports.getSignup = (req, res, next) => {
   res.render("auth/signup", {
-    title: "Airbnb - Sign Up",
+    title: "NexStay - Sign Up",
     currentPage: "signup",
     isLoggedIn: false,
     // Don't pass errorMessage at all for initial load
@@ -46,7 +46,7 @@ exports.postLogin = async (req, res, next) => {
   if(!user) {
     console.log("User not found in database");
     return res.status(401).render("auth/login", { 
-      title: "Airbnb - Login",
+      title: "NexStay - Login",
       currentPage: "login",
       isLoggedIn: false,
       errorMessage: ["User does not exist"],
@@ -88,7 +88,7 @@ exports.postLogin = async (req, res, next) => {
   if(!isMatch) {
     console.log("Password does not match");
     return res.status(422).render('auth/login',{
-      title: 'Airbnb - Login',
+      title: 'NexStay - Login',
       currentPage: 'login',
       isLoggedIn: false,
       errorMessage: ["Invalid password"],
@@ -264,7 +264,7 @@ exports.postSignup = (req, res, next) => {
   
   if (!errors.isEmpty()) {
     return res.status(422).render("auth/signup", {
-      title: "Airbnb - Sign Up",
+      title: "NexStay - Sign Up",
       currentPage: "signup",
       isLoggedIn: false,
       errorMessage: errors.array().map((err) => err.msg),
@@ -284,7 +284,7 @@ exports.postSignup = (req, res, next) => {
     .then(existingUser => {
       if (existingUser) {
         return res.status(422).render("auth/signup", {
-          title: "Airbnb - Sign Up",
+          title: "NexStay - Sign Up",
           currentPage: "signup",
           isLoggedIn: false,
           errorMessage: ["Email already exists"],
@@ -325,7 +325,7 @@ exports.postSignup = (req, res, next) => {
     .catch(err => {
       console.error("Error in signup process:", err);
       res.status(500).render("auth/signup", {
-        title: "Airbnb - Sign Up",
+        title: "NexStay - Sign Up",
         currentPage: "signup",
         isLoggedIn: false,
         errorMessage: [err.message || "An error occurred while signing up"],

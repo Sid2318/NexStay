@@ -18,6 +18,10 @@ export default function Reserve() {
     e.preventDefault()
     const r = await axios.post(`/book/${homeId}`, form)
     setResult(r.data)
+    if (r.status === 201) {
+      // Ensure Bookings page reflects latest
+      window.location.href = '/bookings'
+    }
   }
 
   if (!home) return null

@@ -1,82 +1,131 @@
-import React, { useEffect, useState } from 'react'
-import { Link, useLocation } from 'react-router-dom'
-import axios from 'axios'
+import React, { useEffect, useState } from "react";
+import { Link, useLocation } from "react-router-dom";
+import axios from "axios";
+import "../styles/modern.css";
 
-axios.defaults.baseURL = 'http://localhost:3000/api'
-axios.defaults.withCredentials = true
+axios.defaults.baseURL = "http://localhost:3000/api";
+axios.defaults.withCredentials = true;
 
 export default function Nav() {
-  const { pathname } = useLocation()
-  const [auth, setAuth] = useState({ isLoggedIn: false, user: null })
+  const { pathname } = useLocation();
+  const [auth, setAuth] = useState({ isLoggedIn: false, user: null });
 
   useEffect(() => {
-    axios.get('/me').then(res => setAuth(res.data)).catch(() => setAuth({ isLoggedIn: false, user: null }))
-  }, [pathname])
+    axios
+      .get("/me")
+      .then((res) => setAuth(res.data))
+      .catch(() => setAuth({ isLoggedIn: false, user: null }));
+  }, [pathname]);
 
-  const is = (page) => pathname === page
-  const isHost = auth.user?.userType === 'host'
-  const isGuest = auth.user?.userType === 'guest'
+  const is = (page) => pathname === page;
+  const isHost = auth.user?.userType === "host";
+  const isGuest = auth.user?.userType === "guest";
 
   const logout = async () => {
-    await axios.post('/logout')
-    setAuth({ isLoggedIn: false, user: null })
-    window.location.href = '/login'
-  }
+    await axios.post("/logout");
+    setAuth({ isLoggedIn: false, user: null });
+    window.location.href = "/login";
+  };
 
   return (
-    <header className="bg-red-500 text-white p-4 shadow-md">
-      <nav className="container mx-auto flex justify-between items-center">
-        <div className="flex items-center space-x-6">
-          <Link to="/" className="flex-shrink-0">
-            <img src="http://localhost:3000/images/Airbnb3.png" alt="Airbnb Logo" className="w-12 h-12 mr-12" />
+    <header className="sticky top-0 z-50 backdrop-blur-md bg-amber-100 border-b border-light-gray">
+      <nav className="container navbar flex items-center justify-between py-2">
+        <div className="flex items-center">
+          <Link to="/" className="navbar-brand flex-shrink-0">
+            <img
+              src="http://localhost:3000/images/NexStay.png"
+              alt="NexStay Logo"
+              className="w-11 h-12 mr-10"
+            />
           </Link>
-          <ul className="flex space-x-4 items-center">
+
+          <ul className="flex items-center gap-6 ml-8">
             <li>
-              <Link to="/" className={`${is('/') ? 'bg-red-400' : 'hover:bg-red-400'} py-2 px-4 rounded transition duration-300`}>Home</Link>
+              <Link to="/" className={`nav-link ${is("/") ? "active" : ""}`}>
+                Home
+              </Link>
             </li>
             {auth.isLoggedIn && isGuest && (
               <>
                 <li>
-                  <Link to="/homes" className={`${is('/homes') ? 'bg-red-400' : 'hover:bg-red-400'} py-2 px-4 rounded transition duration-300`}>Home List</Link>
+                  <Link
+                    to="/homes"
+                    className={`nav-link ${is("/homes") ? "active" : ""}`}
+                  >
+                    Properties
+                  </Link>
                 </li>
                 <li>
-                  <Link to="/favourites" className={`${is('/favourites') ? 'bg-red-400' : 'hover:bg-red-400'} py-2 px-4 rounded transition duration-300`}>Favourites</Link>
+                  <Link
+                    to="/favourites"
+                    className={`nav-link ${is("/favourites") ? "active" : ""}`}
+                  >
+                    Saved
+                  </Link>
                 </li>
                 <li>
-                  <Link to="/bookings" className={`${is('/bookings') ? 'bg-red-400' : 'hover:bg-red-400'} py-2 px-4 rounded transition duration-300`}>Bookings</Link>
+                  <Link
+                    to="/bookings"
+                    className={`nav-link ${is("/bookings") ? "active" : ""}`}
+                  >
+                    Trips
+                  </Link>
                 </li>
               </>
             )}
             {auth.isLoggedIn && isHost && (
               <>
                 <li>
-                  <Link to="/host/host-home-list" className={`${is('/host/host-home-list') ? 'bg-red-400' : 'hover:bg-red-400'} py-2 px-4 rounded transition duration-300`}>Host Homes</Link>
+                  <Link
+                    to="/host/host-home-list"
+                    className={`nav-link ${
+                      is("/host/host-home-list") ? "active" : ""
+                    }`}
+                  >
+                    My Listings
+                  </Link>
                 </li>
                 <li>
-                  <Link to="/host/add-home" className={`${is('/host/add-home') ? 'bg-red-400' : 'hover:bg-red-400'} py-2 px-4 rounded transition duration-300`}>Add Home</Link>
-                </li>
-              </>
-            )}
-            {!auth.isLoggedIn && (
-              <>
-                <li>
-                  <Link to="/signup" className={`${is('/signup') ? 'bg-red-400' : 'hover:bg-red-400'} py-2 px-4 rounded transition duration-300`}>Sign Up</Link>
-                </li>
-                <li>
-                  <Link to="/login" className={`${is('/login') ? 'bg-red-400' : 'hover:bg-red-400'} py-2 px-4 rounded transition duration-300`}>Login</Link>
+                  <Link
+                    to="/host/add-home"
+                    className={`nav-link ${
+                      is("/host/add-home") ? "active" : ""
+                    }`}
+                  >
+                    Add Property
+                  </Link>
                 </li>
               </>
             )}
           </ul>
         </div>
-        {auth.isLoggedIn && (
-          <div className="flex items-center">
-            <button onClick={logout} className=" hover:bg-red-400 py-2 px-4 rounded transition duration-300">Logout</button>
+
+        {!auth.isLoggedIn ? (
+          <div className="flex items-center gap-2">
+            <Link
+              to="/login"
+              className={`btn btn-secondary ${is("/login") ? "active" : ""}`}
+            >
+              Login
+            </Link>
+            <Link
+              to="/signup"
+              className={`btn btn-primary ${is("/signup") ? "active" : ""}`}
+            >
+              Sign up
+            </Link>
+          </div>
+        ) : (
+          <div className="flex items-center gap-2">
+            <button onClick={logout} className="btn btn-secondary">
+              Logout
+            </button>
+            <div className="w-8 h-8 bg-primary text-white rounded-full flex items-center justify-center">
+              {auth.user?.name?.charAt(0).toUpperCase() || "U"}
+            </div>
           </div>
         )}
       </nav>
     </header>
-  )
+  );
 }
-
-
