@@ -96,7 +96,7 @@ export default function IndexPage() {
                     <RatingStars rating={h.rating} />
                     <p className="text-gray-800 font-semibold">
                       <span className="text-lg font-bold text-red-600">
-                        Rs{h.price}
+                        ₹{h.price}
                       </span>
                       <span className="text-sm text-gray-500">/night</span>
                     </p>

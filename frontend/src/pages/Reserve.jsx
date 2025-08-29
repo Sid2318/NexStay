@@ -65,7 +65,7 @@ export default function Reserve() {
   if (!home) return null;
 
   return (
-    <main className="container property-details fade-in py-8">
+    <main className="container property-details py-8">
       <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
         {/* Left column - Property details */}
         <div>
@@ -98,7 +98,7 @@ export default function Reserve() {
               <span className="ml-1">{home.rating}</span>
             </div>
             <div className="price-tag font-semibold">
-              ${home.price} <span className="text-gray">night</span>
+              ₹{home.price} <span className="text-gray">night</span>
             </div>
           </div>
         </div>
@@ -219,14 +219,14 @@ export default function Reserve() {
                   <span>
                     ${home.price} × {nights} night{nights !== 1 ? "s" : ""}
                   </span>
-                  <span>${totalPrice}</span>
+                  <span>₹{totalPrice}</span>
                 </div>
 
                 {/* You can add service fee or other charges here if needed */}
 
                 <div className="flex justify-between font-bold text-lg">
                   <span>Total</span>
-                  <span>${totalPrice}</span>
+                  <span>₹{totalPrice}</span>
                 </div>
               </div>
 
@@ -258,7 +258,7 @@ export default function Reserve() {
                 </div>
                 <p>Your stay for {result.nights} nights has been booked.</p>
                 <p className="font-semibold mt-2">
-                  Total: ${result.totalPrice}
+                  Total: ₹{result.totalPrice}
                 </p>
               </div>
             )}

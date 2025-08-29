@@ -50,12 +50,12 @@ export default function EditHome({ mode }) {
   };
 
   return (
-    <div className="container mx-auto p-6 fade-in">
-      <div className="mb-8 border-b pb-4">
+    <div className="container mx-auto p-6 ">
+      <div className="mb-8 border-b pb-4 ">
         <h1 className="text-3xl font-bold text-gray-800">
           {mode === "add" ? "Add New Property" : "Edit Property"}
         </h1>
-        <p className="text-gray-600 mt-2">
+        <p className="text-gray-600 mt-7">
           {mode === "add"
             ? "List your property on NexStay to start receiving bookings."
             : "Update your property information to keep it accurate and attractive."}
@@ -90,7 +90,7 @@ export default function EditHome({ mode }) {
                   htmlFor="price"
                   className="block text-sm font-medium text-gray-700 mb-1"
                 >
-                  Price Per Night ($)
+                  Price Per Night (₹)
                 </label>
                 <input
                   id="price"
@@ -208,16 +208,16 @@ export default function EditHome({ mode }) {
             </div>
           </div>
 
-          <div className="flex items-center justify-end pt-6 border-t border-gray-200">
+          <div className="flex items-center justify-between pt-6  border-gray-200">
             <Button
               type="button"
               variant="secondary"
-              className="mr-3"
+              className="ml-10"
               onClick={() => navigate("/host/host-home-list")}
             >
               Cancel
             </Button>
-            <Button type="submit" variant="primary" className="px-8 py-3">
+            <Button type="submit" variant="primary" className=" px-8 py-3 mr-10">
               {mode === "add" ? "Add Property" : "Save Changes"}
             </Button>
           </div>

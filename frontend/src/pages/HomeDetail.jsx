@@ -17,7 +17,7 @@ export default function HomeDetail() {
   if (!home)
     return (
       <main
-        className="container fade-in"
+        className="container"
         style={{
           minHeight: "70vh",
           display: "flex",
@@ -47,7 +47,7 @@ export default function HomeDetail() {
     );
 
   return (
-    <main className="container property-details fade-in">
+    <main className="container property-details ">
       <div className="property-header">
         <h1>{home.houseName}</h1>
         <div className="flex items-center gap-2 mt-2">
@@ -89,7 +89,7 @@ export default function HomeDetail() {
           <div className="modern-card p-6 sticky" style={{ top: "2rem" }}>
             <div className="flex justify-between items-center mb-4">
               <div className="price-tag text-xl">
-                <strong>${home.price}</strong>{" "}
+                <strong>₹{home.price}</strong>{" "}
                 <span className="text-gray">night</span>
               </div>
               <div className="rating">

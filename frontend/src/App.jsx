@@ -21,7 +21,7 @@ export default function App() {
   return (
     <div className="min-h-screen bg-white">
       <Nav />
-      <div className="fade-in">
+      <div >
         <Routes>
           <Route path="/" element={<IndexPage />} />
           <Route path="/homes" element={<HomeList />} />

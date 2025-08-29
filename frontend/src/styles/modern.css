@@ -294,19 +294,7 @@ p {
   color: var(--secondary);
 }
 
-/* Animations */
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
-}
 
-.fade-in {
-  animation: fadeIn var(--transition-normal);
-}
 
 /* Responsive adjustments */
 @media (max-width: 768px) {

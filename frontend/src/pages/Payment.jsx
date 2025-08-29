@@ -39,7 +39,7 @@ export default function Payment() {
   return (
     <main className="container mx-auto p-6 max-w-lg">
       <h1 className="text-3xl font-bold mb-2">Payment</h1>
-      <p className="text-gray-600 mb-6">{booking.homeName} — Rs{booking.totalPrice}</p>
+      <p className="text-gray-600 mb-6">{booking.homeName} — ₹{booking.totalPrice}</p>
       <div className="bg-white rounded-xl shadow-md border border-gray-100 p-6">
         <h2 className="text-xl font-semibold mb-3">Choose payment method</h2>
         <div className="space-y-3">

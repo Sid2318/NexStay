@@ -22,7 +22,7 @@ export default function Bookings() {
               <h3 className="text-xl font-semibold mt-1">{b.homeName}</h3>
               <p className="text-gray-600">{new Date(b.checkIn).toLocaleDateString()} → {new Date(b.checkOut).toLocaleDateString()}</p>
               <p className="text-gray-700">Guests: {b.guests}</p>
-              <p className="text-red-600 font-bold">Total: Rs{b.totalPrice}</p>
+              <p className="text-red-600 font-bold">Total: ₹{b.totalPrice}</p>
               <div className="mt-3 flex items-center gap-2">
                 {!b.paid ? (
                   <Button to={`/payment/${b.id}`} variant="success" size="sm">Pay</Button>

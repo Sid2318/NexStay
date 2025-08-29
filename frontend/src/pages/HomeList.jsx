@@ -32,7 +32,7 @@ export default function HomeList() {
               </div>
               <div className="flex items-center justify-between mb-4">
                 <RatingStars rating={h.rating} />
-                <p className="text-gray-800 font-semibold"><span className="text-lg font-bold text-red-600">Rs{h.price}</span><span className="text-sm text-gray-500">/night</span></p>
+                <p className="text-gray-800 font-semibold"><span className="text-lg font-bold text-red-600">₹{h.price}</span><span className="text-sm text-gray-500">/night</span></p>
               </div>
               <div className="flex items-center justify-between mt-4">
                 <Button to={`/homes/${h._id}`} variant="secondary" className="flex-1">View Details</Button>
