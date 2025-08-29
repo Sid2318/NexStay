@@ -14,7 +14,7 @@ export default function Favourites() {
   }
   return (
     <div className="container mx-auto p-6">
-      <p className="text-2xl text-gray-700 mb-8 0 text-center">Favourites will Appear here:</p>
+      {/* <p className="text-2xl text-gray-700 mb-8 0 text-center">Favourites will Appear here:</p> */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
         {homes.map(h => (
           <div key={h._id} className="bg-white rounded shadow p-4">

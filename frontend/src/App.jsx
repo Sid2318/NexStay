@@ -13,6 +13,9 @@ import HostHomes from "./pages/HostHomes.jsx";
 import EditHome from "./pages/EditHome.jsx";
 import Login from "./pages/Login.jsx";
 import Signup from "./pages/Signup.jsx";
+import ChatAssistant from "./components/ChatAssistant.jsx";
+
+// import "bootstrap/dist/css/bootstrap.min.css";
 
 export default function App() {
   return (
@@ -38,6 +41,8 @@ export default function App() {
           <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
       </div>
+      {/* Chat Assistant that's available on all pages */}
+      <ChatAssistant />
     </div>
   );
 }

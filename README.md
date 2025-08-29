@@ -14,6 +14,7 @@ A modern property rental platform inspired by Airbnb, built with the MERN stack 
 - **Booking System**: Reserve properties with a streamlined booking process
 - **PDF Download**: Download property details as PDF for offline reference
 - **Booking Management**: View and manage all your bookings in one place
+- **AI-Powered Chat Assistant**: Get instant help with bookings, questions, and information through our intelligent chatbot
 
 ### For Hosts
 
@@ -28,6 +29,8 @@ A modern property rental platform inspired by Airbnb, built with the MERN stack 
 - **Modern UI**: Clean, minimal design with intuitive navigation
 - **User Authentication**: Secure login and registration system
 - **User Profiles**: Personalized user experience with profile management
+- **Smart Chatbot**: 24/7 AI assistant using Groq's Llama-3.1-8B-Instant model
+- **Adaptive Chat**: Automatic fallback to basic responses if AI service is unavailable
 
 ## Technology Stack
 
@@ -48,6 +51,13 @@ A modern property rental platform inspired by Airbnb, built with the MERN stack 
 - **Multer**: For handling file uploads
 - **PDFKit**: For generating PDF documents
 
+### AI & Machine Learning
+
+- **Groq API**: Ultra-fast LLM inference for the chatbot
+- **Llama-3.1-8B-Instant**: State-of-the-art language model for intelligent responses
+- **LangGraph**: Graph-based conversational memory for context awareness
+- **Python Integration**: Seamless integration of Python ML capabilities with Node.js backend
+
 ### Authentication
 
 - **Session-based Authentication**: Secure user sessions
@@ -57,22 +67,28 @@ A modern property rental platform inspired by Airbnb, built with the MERN stack 
 
 ```
 NexStay/
-├── frontend/                 # React frontend application
+├── backend/                 # Node.js/Express backend
+│   ├── controllers/         # Route controllers
+│   ├── models/              # MongoDB models
+│   ├── routes/              # API routes
+│   ├── utils/               # Utility functions
+│   │   ├── chatbot/         # Python chatbot files
+│   │   └── pdf/             # PDF generation utilities
+│   ├── uploads/             # Property images storage
+│   ├── views/               # EJS templates
+│   └── app.js               # Main application file
+│
+├── frontend/                # React frontend application
+│   ├── public/              # Static files
 │   ├── src/
-│   │   ├── components/       # Reusable UI components
-│   │   ├── pages/            # Page components
-│   │   ├── styles/           # CSS and styling
-│   │   └── ...
-├── controllers/              # Express route controllers
-├── models/                   # MongoDB models
-├── routes/                   # Express routes
-├── utils/                    # Utility functions
-├── public/                   # Static assets
-│   └── images/               # Image assets
-├── views/                    # EJS templates (legacy)
-├── uploads/                  # Uploaded files
-├── app.js                    # Express app entry point
-└── package.json              # Project dependencies
+│   │   ├── components/      # Reusable UI components
+│   │   ├── pages/           # Page components
+│   │   ├── services/        # API service functions
+│   │   ├── styles/          # CSS and styling
+│   │   └── App.jsx          # Main React component
+│
+├── CHATBOT_README.md        # Chatbot documentation
+└── README.md                # Project documentation
 ```
 
 ## Getting Started
@@ -94,6 +110,7 @@ cd NexStay
 2. Install backend dependencies
 
 ```bash
+cd backend
 npm install
 ```
 
@@ -102,18 +119,28 @@ npm install
 ```bash
 cd frontend
 npm install
-cd ..
 ```
 
-4. Create a `.env` file in the root directory with the following variables:
+4. Set up environment variables
 
-```
-PORT=3000
-MONGODB_URI=mongodb://localhost:27017/nexstay
-SESSION_SECRET=your_session_secret
-```
+   - Create `.env` file in the backend directory with the following variables:
 
-5. Start the development server
+   ```
+   MONGODB_URI=your_mongodb_connection_string
+   SESSION_SECRET=your_session_secret
+   PORT=3000
+   GROQ_API_KEY=your_groq_api_key
+   ```
+
+5. Set up the AI chatbot (optional)
+
+   ```bash
+   cd backend
+   pip install -r utils/chatbot/requirements.txt
+   node utils/chatbot/setup.js
+   ```
+
+6. Start the development server
 
 ```bash
 # Start backend server
@@ -153,6 +180,24 @@ Properties include details such as:
 4. Selects payment method
 5. Confirms booking
 
+### AI-Powered Chat Assistant
+
+The chatbot provides intelligent assistance with:
+
+- Answering questions about properties and bookings
+- Providing guidance on using the platform
+- Offering travel recommendations
+- Assisting with payment and reservation issues
+- Automatically adapting to user needs
+
+Key technical features:
+
+- Uses Groq's Llama-3.1-8B-Instant language model
+- Maintains conversation context
+- Falls back to basic responses if AI is unavailable
+- Displays chat status (AI Powered/Basic Mode)
+- Remembers conversations during user sessions
+
 ### User Management
 
 - User registration and login
@@ -167,6 +212,11 @@ Properties include details such as:
 - **Payment Integration**: Real-time payment processing
 - **Calendar Sync**: Integration with external calendars
 - **Mobile App**: Native mobile applications for iOS and Android
+- **Advanced AI Features**:
+  - Integration with booking system to allow direct reservations through chat
+  - Multi-language support for international travelers
+  - Personalized recommendations based on user preferences
+  - Integration with local attraction and event information
 
 ## Contributing
 
@@ -183,4 +233,5 @@ This project is licensed under the MIT License - see the LICENSE file for detail
 ## Acknowledgments
 
 - Design inspired by Airbnb's user interface
+- AI technology powered by Groq's Llama-3.1-8B-Instant model
 - Thanks to all contributors who participated in this project
