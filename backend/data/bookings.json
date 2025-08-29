@@ -1,1 +1,17 @@
-[]
+[
+  {
+    "id": "1756480104504_rv09f1lpymi",
+    "userId": "68b1c1929e759dd45d6e7cf6",
+    "homeId": "68a204d0ea51eb8e3e1e380c",
+    "homeName": "Ekdantay",
+    "price": 10000,
+    "checkIn": "2025-08-07T00:00:00.000Z",
+    "checkOut": "2025-08-08T00:00:00.000Z",
+    "guests": 2,
+    "paymentMode": "cod",
+    "totalPrice": 10000,
+    "createdAt": "2025-08-29T15:08:24.505Z",
+    "paid": true,
+    "paidAt": "2025-08-29T15:08:35.660Z"
+  }
+]

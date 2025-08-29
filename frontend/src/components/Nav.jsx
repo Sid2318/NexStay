@@ -41,7 +41,8 @@ export default function Nav() {
 
           <ul className="flex items-center gap-6 ml-8">
             <li>
-              <Link to="/" className={`nav-link ${is("/") ? "active" : ""}`}>
+              <Link to="/" className={`nav-link ${is("/") ? "active" : ""}`}
+              >
                 Home
               </Link>
             </li>
@@ -104,20 +105,22 @@ export default function Nav() {
           <div className="flex items-center gap-2">
             <Link
               to="/login"
-              className={`btn btn-secondary mr-2 ${is("/login") ? "active" : ""}`}
+              className={`btn btn-secondary ${is("/login") ? "active" : ""}`}
+              style={{ height: "45px", marginRight: "8px" }}
             >
               Login
             </Link>
             <Link
               to="/signup"
               className={`btn btn-primary ml-2 ${is("/signup") ? "active" : ""}`}
+              style={{ height: "45px", marginRight: "8px" }}
             >
               Sign up
             </Link>
           </div>
         ) : (
           <div className="flex items-center gap-2">
-            <button onClick={logout} className="btn btn-secondary">
+            <button onClick={logout} className="btn btn-secondary" style={{ height: "45px", marginRight: "8px" }}>
               Logout
             </button>
             <div className="w-8 h-8 bg-primary text-white rounded-full flex items-center justify-center">
